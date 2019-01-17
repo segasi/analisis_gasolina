@@ -55,3 +55,11 @@ d_edos <-
   rename(edo = "..1") %>% 
   filter(!edo %in% c("Nacional", "Noroeste", "Noreste", "Centro-Occidente", "Centro", "Sur-Sureste"),
          !is.na(edo))
+
+
+### Transformar estructura de datos -----
+d_edos <- 
+  d_edos %>% 
+  gather(key = mes_año,
+         value = demanda,
+         -edo)
