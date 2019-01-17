@@ -49,3 +49,9 @@ tema_hm <-  theme_minimal() +
 demanda <- read_excel("01_datos/eqitvzqcet_VIGSL_PSP_15012019_20_11.xls", range = "A7:CA46") # Solo importamos los calumnas que incluyen valores numéricos. 
 
 
+### Renombrar primera columna y filtrar renglones vacíos o con datos nacional y regionales -----
+d_edos <- 
+  demanda %>% 
+  rename(edo = "..1") %>% 
+  filter(!edo %in% c("Nacional", "Noroeste", "Noreste", "Centro-Occidente", "Centro", "Sur-Sureste"),
+         !is.na(edo))
