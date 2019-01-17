@@ -81,5 +81,14 @@ d_edos <-
                          mes_texto == "Oct" ~ 10,
                          mes_texto == "Nov" ~ 11,
                          mes_texto == "Dic" ~ 12),
+         mest_texto = fct_relevel(mes_texto,       # Redefinir orden de niveles de meses    
+                                  "Ene", "Feb", "Mar",
+                                  "Abr", "May", "Jun",
+                                  "Jul", "Ago", "Sep",
+                                  "Oct", "Nov", "Dic"), 
          año = as.numeric(año),                     # Cambiar tipo de dato de año
          fecha = make_date(año, mes))               # Generar variable de fecha
+
+
+
+
