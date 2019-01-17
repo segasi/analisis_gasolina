@@ -65,12 +65,20 @@ d_nal_reg <-
 
 
 ### Transformar estructura de datos -----
+
+# Estados
 d_edos <- 
   d_edos %>% 
   gather(key = mes_año,
          value = demanda,
          -edo)
 
+# Nacional y regiones
+d_nal_reg <- 
+  d_nal_reg %>% 
+  gather(key = mes_año,
+         value = demanda,
+         -edo)
 
 ### Transformar datos ----
 d_edos <- 
