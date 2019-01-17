@@ -40,3 +40,12 @@ tema_hm <-  theme_minimal() +
         axis.title = element_text(size = 18, hjust = 1, face = "bold", margin = margin(0,0,0,0), family="Didact Gothic Regular"),
         axis.text.x = element_text(size = 16, face = "bold", family="Didact Gothic Regular"),
         axis.text.y = element_text(size = 12, face = "bold", family="Didact Gothic Regular"))
+
+
+### Importar datos ----
+
+# Fuente: Sistema de Información Energetica | http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=VIGSL_PSP
+
+demanda <- read_excel("01_datos/eqitvzqcet_VIGSL_PSP_15012019_20_11.xls", range = "A7:CA46") # Solo importamos los calumnas que incluyen valores numéricos. 
+
+
