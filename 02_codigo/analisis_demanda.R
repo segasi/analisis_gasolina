@@ -81,6 +81,7 @@ d_nal_reg <-
          -edo)
 
 ### Transformar datos ----
+# Estados
 d_edos <- 
   d_edos %>% 
   separate(mes_año, c("mes_texto", "año")) %>%     # Separar columna mes_año
@@ -105,6 +106,29 @@ d_edos <-
          fecha = make_date(año, mes))               # Generar variable de fecha
 
 
+# Nacional y regiones
+d_nal_reg <- 
+  d_nal_reg %>% 
+  separate(mes_año, c("mes_texto", "año")) %>%     # Separar columna mes_año
+  mutate(mes = case_when(mes_texto == "Ene" ~ 1,   # Generar columna numérica de mes
+                         mes_texto == "Feb" ~ 2,
+                         mes_texto == "Mar" ~ 3,
+                         mes_texto == "Abr" ~ 4,
+                         mes_texto == "May" ~ 5,
+                         mes_texto == "Jun" ~ 6,
+                         mes_texto == "Jul" ~ 7,
+                         mes_texto == "Ago" ~ 8,
+                         mes_texto == "Sep" ~ 9,
+                         mes_texto == "Oct" ~ 10,
+                         mes_texto == "Nov" ~ 11,
+                         mes_texto == "Dic" ~ 12),
+         mes_texto = fct_relevel(mes_texto,       # Redefinir orden de niveles de meses    
+                                 "Ene", "Feb", "Mar",
+                                 "Abr", "May", "Jun",
+                                 "Jul", "Ago", "Sep",
+                                 "Oct", "Nov", "Dic"), 
+         año = as.numeric(año),                     # Cambiar tipo de dato de año
+         fecha = make_date(año, mes))   
 
 ### Gráfica: demanda mensual de gasolina por año y estado, 2014-2017
 d_edos %>% 
