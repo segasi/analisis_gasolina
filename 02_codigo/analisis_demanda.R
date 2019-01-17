@@ -49,7 +49,7 @@ tema_hm <-  theme_minimal() +
 demanda <- read_excel("01_datos/eqitvzqcet_VIGSL_PSP_15012019_20_11.xls", range = "A7:CA46") # Solo importamos los calumnas que incluyen valores numéricos. 
 
 
-### Renombrar primera columna y filtrar renglones vacíos o con datos nacional y regionales -----
+### Generar dataframe con datos estatales -----
 d_edos <- 
   demanda %>% 
   rename(edo = "..1") %>% 
