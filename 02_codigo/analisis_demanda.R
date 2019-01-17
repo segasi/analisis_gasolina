@@ -137,7 +137,7 @@ d_edos %>%
   geom_line(size = 1, alpha = 0.7, color = "grey50") +
   stat_summary(aes(group = edo), fun.y = mean, geom = "line", colour = "salmon", size = 1) +
   facet_wrap(~ edo, ncol = 8) +
-  labs(title = str_wrap(str_to_upper("demanda mensual de gasolina por año y estado, 2014-2017"), width = 80),
+  labs(title = str_wrap(str_to_upper("demanda mensual de gasolina por año y estado, 2012-2017"), width = 80),
        subtitle = "Las líneas grises indican la demanda mensual de gasolina a lo largo de cada año. La línea roja representa el promedio de la demana para el mes y estado correspondiente.",
        x = NULL,
        y = "Miles de barriles diarios\n",
