@@ -56,6 +56,13 @@ d_edos <-
   filter(!edo %in% c("Nacional", "Noroeste", "Noreste", "Centro-Occidente", "Centro", "Sur-Sureste"),
          !is.na(edo))
 
+### Generar dataframe con datos nacionales y por región -----
+d_nal_reg <- 
+  demanda %>% 
+  rename(edo = "..1") %>% # Renombrar primera columna
+  filter(edo %in% c("Nacional", "Noroeste", "Noreste", "Centro-Occidente", "Centro", "Sur-Sureste"), # Filtrar renglones con datos estatales 
+         !is.na(edo)) # Filtrar renglones con NAs
+
 
 ### Transformar estructura de datos -----
 d_edos <- 
@@ -111,3 +118,5 @@ d_edos %>%
         plot.caption = element_text(size = 22)) +
   ggsave(filename = "demanda_mensual_gasolina_año_estado_2014_2017.png", path = "03_graficas", width = 24, height = 15, dpi = 200) 
   
+
+
