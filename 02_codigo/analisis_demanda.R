@@ -81,7 +81,7 @@ d_edos <-
                          mes_texto == "Oct" ~ 10,
                          mes_texto == "Nov" ~ 11,
                          mes_texto == "Dic" ~ 12),
-         mest_texto = fct_relevel(mes_texto,       # Redefinir orden de niveles de meses    
+         mes_texto = fct_relevel(mes_texto,       # Redefinir orden de niveles de meses    
                                   "Ene", "Feb", "Mar",
                                   "Abr", "May", "Jun",
                                   "Jul", "Ago", "Sep",
@@ -91,4 +91,23 @@ d_edos <-
 
 
 
-
+### Gráfica: demanda mensual de gasolina por año y estado, 2014-2017
+d_edos %>% 
+  filter(año < 2018) %>% 
+  ggplot(aes(mes_texto, demanda, group = año)) +
+  geom_line(size = 1, alpha = 0.7, color = "grey50") +
+  stat_summary(aes(group = edo), fun.y = mean, geom = "line", colour = "salmon", size = 1) +
+  facet_wrap(~ edo, ncol = 8) +
+  labs(title = str_wrap(str_to_upper("demanda mensual de gasolina por año y estado, 2014-2017"), width = 80),
+       subtitle = "Las líneas grises indican la demanda mensual de gasolina a lo largo de cada año. La línea roja representa el promedio de la demana para el mes y estado correspondiente.",
+       x = NULL,
+       y = "Miles de barriles diarios\n",
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2018.") +
+  tema +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        strip.background = element_rect(color = "grey60", fill = "grey60"),
+        strip.text = element_text(color = "white", size = 22),
+        plot.subtitle = element_text(size = 22),
+        plot.caption = element_text(size = 22)) +
+  ggsave(filename = "demanda_mensual_gasolina_año_estado_2014_2017.png", path = "03_graficas", width = 24, height = 15, dpi = 200) 
+  
