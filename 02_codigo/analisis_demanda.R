@@ -10,7 +10,7 @@ options(scipen=999) # Prevenir notación científica
 
 ### Definir tema de gráficas ----
 tema <-  theme_minimal() +
-  theme(text = element_text(family="Didact Gothic Regular", color = "grey35"),
+  theme(text = element_text(family = "Didact Gothic Regular", color = "grey35"),
         plot.title = element_text(size = 28, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
         plot.subtitle = element_text(size = 16, face = "bold", colour = "#666666", margin = margin(0, 0, 20, 0), family="Didact Gothic Regular"),
         plot.caption = element_text(hjust = 0, size = 15),
@@ -59,9 +59,9 @@ d_edos <-
 ### Generar dataframe con datos nacionales y por región -----
 d_nal_reg <- 
   demanda %>% 
-  rename(edo = "..1") %>% # Renombrar primera columna
-  filter(edo %in% c("Nacional", "Noroeste", "Noreste", "Centro-Occidente", "Centro", "Sur-Sureste"), # Filtrar renglones con datos estatales 
-         !is.na(edo)) # Filtrar renglones con NAs
+  rename(nivel = "..1") %>% # Renombrar primera columna
+  filter(nivel %in% c("Nacional", "Noroeste", "Noreste", "Centro-Occidente", "Centro", "Sur-Sureste"), # Filtrar renglones con datos estatales 
+         !is.na(nivel)) # Filtrar renglones con NAs
 
 
 ### Transformar estructura de datos -----
@@ -78,7 +78,7 @@ d_nal_reg <-
   d_nal_reg %>% 
   gather(key = mes_año,
          value = demanda,
-         -edo)
+         -nivel)
 
 ### Transformar datos ----
 # Estados
@@ -148,7 +148,29 @@ d_edos %>%
         strip.text = element_text(color = "white", size = 22),
         plot.subtitle = element_text(size = 22),
         plot.caption = element_text(size = 22)) +
-  ggsave(filename = "demanda_mensual_gasolina_año_estado_2014_2017.png", path = "03_graficas", width = 24, height = 15, dpi = 200) 
-  
+  ggsave(filename = "demanda_mensual_gasolina_año_estado_2012_2017.png", path = "03_graficas", width = 24, height = 15, dpi = 200) 
+
+
+### Gráfica: demanda mensual de gasolina a nivel nacional, 2012-2017 ----
+d_nal_reg %>% 
+  filter(nivel == "Nacional",
+         año < 2018) %>% 
+  group_by(mes_texto) %>% 
+  mutate(demanda_promedio = mean(demanda)) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_line(aes(mes_texto, demanda, group = año), size = 1, alpha = 0.7, color = "grey50") +
+  geom_line(aes(mes_texto, demanda_promedio, group = 1), color = "salmon", size = 2, alpha = 0.9) +
+  annotate(geom = "segment", x = 1.2, xend = 1.8, y = 885.5, yend = 885.5, color = "salmon", size = 2, alpha = 0.9) +
+  annotate(geom = "text", label = "Demanda promedio mensual", x = 2, y = 885.5, color = "grey30", size = 6, hjust = 0, family = "Didact Gothic Regular") +
+  scale_y_continuous(breaks = seq(750, 900, 25)) +
+  labs(title = str_wrap(str_to_upper("demanda mensual de gasolina a nivel nacional, 2012-2017"), width = 80),
+       subtitle = str_wrap("Las líneas grises indican la demanda mensual de gasolina a lo largo del año correspondiente. La línea roja representa la demanda promedio de gasolina para ese mes en el período analizado.", width = 130),
+       x = NULL,
+       y = "Miles de barriles diarios\n",
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2018.") +
+  tema +
+  ggsave(filename = "demanda_mensual_gasolina_año_2012_2017.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
+
 
 
