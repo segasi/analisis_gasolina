@@ -49,3 +49,56 @@ tema_hm <-  theme_minimal() +
 nom_var <- read_excel("01_datos/inqzalqdqy_SSHDGPC22_18012019_10_37.xls", range = "A8:CG8") # Importar nombres de variables
 
 bd_imports <- read_excel("01_datos/inqzalqdqy_SSHDGPC22_18012019_10_37.xls", range = "A19:CG20", col_names =F) # Importar renglones correspondientes a importación de gasolina. Solo importamos los renglones correspondientes a Pemex y Otras empresas, pero no el total
+
+
+### Transformar datos ----
+
+# Agregar nombres de columnas ----
+colnames(bd_imports) <- colnames(nom_var)
+bd_imports
+
+# Transformar estructura de base de datos -----
+bd_imports <- 
+  bd_imports %>% 
+  rename(fuente = "..1") %>% # Renombrar primera columna
+  gather(key = mes_año,
+         value = importaciones,
+         -fuente)
+
+
+# Generar columna de fecha ----
+bd_imports <- 
+  bd_imports %>% 
+  separate(mes_año, c("mes_texto", "año")) %>%     # Separar columna mes_año
+  mutate(mes = case_when(mes_texto == "Ene" ~ 1,   # Generar columna numérica de mes
+                         mes_texto == "Feb" ~ 2,
+                         mes_texto == "Mar" ~ 3,
+                         mes_texto == "Abr" ~ 4,
+                         mes_texto == "May" ~ 5,
+                         mes_texto == "Jun" ~ 6,
+                         mes_texto == "Jul" ~ 7,
+                         mes_texto == "Ago" ~ 8,
+                         mes_texto == "Sep" ~ 9,
+                         mes_texto == "Oct" ~ 10,
+                         mes_texto == "Nov" ~ 11,
+                         mes_texto == "Dic" ~ 12),
+         mes_texto = fct_relevel(mes_texto,       # Redefinir orden de niveles de meses    
+                                 "Ene", "Feb", "Mar",
+                                 "Abr", "May", "Jun",
+                                 "Jul", "Ago", "Sep",
+                                 "Oct", "Nov", "Dic"), 
+         año = as.numeric(año),                     # Cambiar tipo de dato de año
+         fecha = make_date(año, mes))               # Generar variable de fecha
+
+
+
+# En la columna "importaciones", convertir N/D en NAs y cambiar tipo de variable a numeric ----
+bd_imports <- 
+  bd_imports %>% 
+  mutate(importaciones = ifelse(importaciones == "N/D", NA, importaciones),
+         importaciones = as.numeric(importaciones))
+
+
+
+
+
