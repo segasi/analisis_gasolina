@@ -85,4 +85,38 @@ bd_produccion %>%
   tema +
   theme(plot.title = element_text(size = 26, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  ggsave(filename = "produccion_semanal_gasolina_2018.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
+  ggsave(filename = "produccion_semanal_nacional_gasolina_2018.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
+
+
+
+### Gráfica: producción semanal de gasolina a nivel regional entre el 6 de abril de 2018 y el 4 de enero de 2019 ----
+bd_produccion %>% 
+  filter(tipo == "Gasolina",
+         fecha >= as_datetime("2018-03-31 12:00:00")) %>% 
+  group_by(fecha, region) %>% 
+  summarise(produccion_semanal = sum(valor)) %>% 
+  ungroup() %>% 
+  arrange(region, fecha) %>%  
+  group_by(region) %>% 
+  mutate(promedio_movil = rollmean(x = produccion_semanal, 4, align = "right", fill = NA)) %>%
+  ungroup() %>% 
+  ggplot() +
+  geom_line(aes(fecha, produccion_semanal, group = 1), size = 1, alpha = 0.7, color = "grey50") +
+  geom_line(aes(fecha, promedio_movil, group = 1), size = 2, alpha = 0.9, color = "salmon") +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "2 week"), limits = c(as_datetime("2018-03-20 12:00:00"), as_datetime("2019-01-14 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_y_continuous(breaks = seq(0, 100, 10), limits = c(0, 95)) +
+  facet_wrap(~ region, scale = "free_x") +
+  labs(title = str_wrap(str_to_upper("producción semanal de gasolina a nivel regional, 6/4/2018 al 4/1/2019"), width = 80),
+       subtitle = str_wrap("Las líneas grises indican la producción semanal de gasolina. Las líneas rojas muestran el promedio móvil de cuatro semanas.", width = 140),
+       x = NULL,
+       y = "Miles de barriles diarios\n",
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 10 de enero de 2018.\nLa serie comienza el 6 de abril de 2018 porque ese es el primer mes para el cual la base de datos tiene información para todas las semanas.") +
+  tema +
+  theme(plot.title = element_text(size = 35, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
+        plot.subtitle = element_text(size = 24), 
+        plot.caption = element_text(size = 22), 
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.title.y = element_text(size = 20),
+        strip.background = element_rect(color = "grey60", fill = "grey60"),
+        strip.text = element_text(color = "white", size = 22)) +
+  ggsave(filename = "produccion_semanal_region_gasolina_2018.png", path = "03_graficas", width = 20, height = 15, dpi = 200)
