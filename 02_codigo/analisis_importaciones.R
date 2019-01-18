@@ -44,7 +44,7 @@ tema_hm <-  theme_minimal() +
 
 ### Importar datos ----
 
-# Fuente: Sistema de Información Energetica | http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=SSHDGPC22
+# Fuente: Sistema de Información Energetica | http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=SSHDGPC22. Por default, el SIE muestra los datos de 2018. Para ampliar la serie especificamos el rango temporal usando el botón de "Opciones".
 
 nom_var <- read_excel("01_datos/inqzalqdqy_SSHDGPC22_18012019_10_37.xls", range = "A8:CG8") # Importar nombres de variables
 
