@@ -46,3 +46,16 @@ tema_hm <-  theme_minimal() +
 # Fuente: http://estadisticashidrocarburos.energia.gob.mx/Datos_semana.aspx
 
 bd_produccion <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Produccion")
+
+
+### Transformación de datos ----
+
+# Limpiaer datos ----
+bd_produccion <- clean_names(bd_produccion)
+
+# Cambiar tipo de variables y reordenar niveles de la variable mes ----
+bd_produccion <- 
+  bd_produccion %>%
+  mutate(valor = as.numeric(valor), # Transformar tipo de variable a numeric
+         fecha = dmy_hms(fecha), # Transformar tipo de variable a dttm
+         mes = fct_relevel(mes, "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")) 
