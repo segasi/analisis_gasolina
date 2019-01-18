@@ -42,3 +42,10 @@ tema_hm <-  theme_minimal() +
         axis.text.y = element_text(size = 12, face = "bold", family="Didact Gothic Regular"))
 
 
+### Importar datos ----
+
+# Fuente: Sistema de Información Energetica | http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=SSHDGPC22
+
+nom_var <- read_excel("01_datos/inqzalqdqy_SSHDGPC22_18012019_10_37.xls", range = "A8:CG8") # Importar nombres de variables
+
+bd_imports <- read_excel("01_datos/inqzalqdqy_SSHDGPC22_18012019_10_37.xls", range = "A19:CG20", col_names =F) # Importar renglones correspondientes a importación de gasolina. Solo importamos los renglones correspondientes a Pemex y Otras empresas, pero no el total
