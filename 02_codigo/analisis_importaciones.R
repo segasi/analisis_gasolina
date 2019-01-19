@@ -99,6 +99,33 @@ bd_imports <-
          importaciones = as.numeric(importaciones))
 
 
+### Gráfica: importaciones mensuales 2013-2018 ----
+bd_imports %>% 
+  filter(año > 2012, 
+         fuente == "PEMEX") %>% 
+  mutate(importaciones = ifelse(fecha == as_date("2018-12-01"), 559, importaciones),
+         color_2018 = ifelse(año == 2018, "2018", "Otro")) %>% 
+  group_by(mes_texto) %>% 
+  mutate(importaciones_promedio = mean(importaciones, na.rm = T)) %>% 
+  ungroup() %>%  
+  ggplot() +
+  geom_line(aes(mes_texto, importaciones, group = año, color = color_2018), size = 1, alpha = 0.9) +
+  geom_line(aes(mes_texto, importaciones_promedio, group = 1), color = "salmon", size = 2, alpha = 0.9) +
+  scale_color_manual(values = c("steelblue", "grey80")) +
+  annotate(geom = "segment", x = 1.2, xend = 1.8, y = 685.5, yend = 685.5, color = "salmon", size = 2, alpha = 0.9) +
+  annotate(geom = "text", label = "Promedio de importaciones mensuales", x = 2, y = 685.5, color = "grey30", size = 6, hjust = 0, family = "Didact Gothic Regular") +
+  annotate(geom = "segment", x = 1.2, xend = 1.8, y = 685.5, yend = 685.5, color = "salmon", size = 2, alpha = 0.9) +
+  annotate(geom = "text", label = "2018", x = 2, y = 665.5, color = "grey30", size = 6, hjust = 0, family = "Didact Gothic Regular") +
+  annotate(geom = "segment", x = 1.2, xend = 1.8, y = 665.5, yend = 665.5, color = "steelblue", size = 2, alpha = 0.9) +
+  labs(title = str_wrap(str_to_upper("importaciones mensuales de gasolina a nivel nacional, 2013-2018*"), width = 80),
+       subtitle = str_wrap("Las líneas grises indican el volumen de importaciones mensuales de gasolina a lo largo del año correspondiente. La línea roja representa el promedio de importaciones de gasolina para ese mes en el período analizado. La línea azul resalta los valores de 2018", width = 130),
+       x = NULL,
+       y = "Miles de barriles diarios\n",
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2018. *La cifra de diciembre de 2018 es preliminar y proviene de la información publicada por la Secretaría de Energía.") +
+  tema +
+  theme(legend.position = "none") +
+  ggsave(filename = "importaciones_mensual_gasolina_año_2012_2017.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
+
 
 
 
