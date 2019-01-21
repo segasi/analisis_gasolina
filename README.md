@@ -1,4 +1,4 @@
-# Análisis de diversos indicadores relacionados con la  gasolina en México hasta diciembre de 2018
+# Análisis de diversos indicadores relacionados con la  gasolina en México
 
 Este repo contiene los insumos y resultados del análisis que [Jorge A. Castañeda](https://twitter.com/jorgeacast) y yo hicimos de:
 
