@@ -7,7 +7,8 @@ Este repo contiene los insumos y resultados del análisis que [Jorge A. Castañe
 - La producción semanal de gasolina en las refinerías nacionales entre abril de 2018 y la primera semana de enero de 2019; y,
 - El volumen mensual de importaciones de gasolina entre 2013 y 2018.
 
-![](http://segasi.com.mx/github/demanda_mensual_gasolina_año_2012_2017.png)
+![](http://segasi.com.mx/github/demanda_mensual_gasolina_anio_2012_2017.png)
+
 
 ![](http://segasi.com.mx/github/produccion_semanal_nacional_gasolina_2018.png)
 
