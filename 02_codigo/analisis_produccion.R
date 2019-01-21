@@ -142,3 +142,27 @@ bd_produccion %>%
         strip.background = element_rect(color = "grey60", fill = "grey60"),
         strip.text = element_text(color = "white", size = 22)) +
   ggsave(filename = "produccion_semanal_region_gasolina_2018.png", path = "03_graficas", width = 20, height = 15, dpi = 200)
+
+
+
+### Gráfica de producción anual de gasolina, 2013 a 2017 ----
+bd_prod_anual_gasolina %>% 
+  filter(año > 2012 & año < 2018) %>% 
+  ggplot(aes(año, produccion)) +
+  geom_col(alpha = 0.7, fill = "grey50") +
+  geom_text(aes(label = round(produccion, 1)), vjust = 1.7, fontface = "bold", color = "white", size = 8) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(title = str_wrap(str_to_upper("producción anual de gasolina a nivel nacional, 2013 a 2017"), width = 80),
+       subtitle = "Miles de barriles diarios",
+       x = NULL,
+       y = NULL,
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE. Consultado el 20 de enero de 2018.") +
+  tema +
+  theme(plot.title = element_text(size = 26, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
+        plot.subtitle = element_text(size = 20),
+        axis.text.x = element_text(size = 20, 
+                                   face = "bold"), 
+        axis.text.y = element_blank(), 
+        panel.grid = element_blank()) +
+  ggsave(filename = "produccion_anual_nacional_gasolina_2013_2018.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
