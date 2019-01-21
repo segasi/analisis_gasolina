@@ -47,6 +47,12 @@ tema_hm <-  theme_minimal() +
 
 bd_produccion <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Produccion")
 
+# Fuente: Sistema de Información Energetica (SIE). Por default, el SIE muestra los datos de 2018. Para ampliar la serie especificamos el rango temporal usando el botón de "Opciones".
+
+nom_var_prod_anual_gasolina <- read_excel("01_datos/lbxurxiytw_PMXD1C01_20012019_23_21.xls", range = "A7:H7") # Importar nombres de variables
+
+bd_prod_anual_gasolina <- read_excel("01_datos/lbxurxiytw_PMXD1C01_20012019_23_21.xls", range = "A16:H16", col_names = F) # Importar renglón correspondiente a producción anual de gasolina.
+
 
 ### Transformación de datos ----
 
