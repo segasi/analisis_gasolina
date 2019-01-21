@@ -86,3 +86,13 @@ bd_semanal %>%
   ggsave(filename = "niveles_semanales_de_inventarios_de_gasolinas_por_terminal_log.png", path = "03_graficas/", width = 23, height = 18, dpi = 200)
 
 
+### Promedio anual de los inventarios nacionales semanales hasta el 30 de noviembre de 2018 ----
+bd_semanal %>%
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento", 
+         semana < as_date("2018-12-07")) %>% 
+  # group_by(mes = floor_date(semana, "month")) %>% 
+  group_by(semana) %>% 
+  summarise(mb_nacional = sum(mb)) %>% 
+  ungroup() %>%
+  summarise(mb_promedio_semanal = mean(mb_nacional))  
