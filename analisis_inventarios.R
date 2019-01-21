@@ -46,3 +46,16 @@ tema_hm <-  theme_minimal() +
 
 # Fuente: http://estadisticashidrocarburos.energia.gob.mx/Datos_semana.aspx
 bd_semanal <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Inventarios")
+
+
+### Transformaciones varias ----
+
+# "Limpiar" nombres de variables ----
+bd_semanal <- clean_names(bd_semanal)
+
+# Cambiar tipo de variables y crear nuevas ----
+bd_semanal <- bd_semanal %>% 
+  mutate(mb = as.numeric(mb), # Transformar tipo de variable a numeric
+         semana = dmy_hms(semana), # Transformar tipo de variable a dttm
+         mes = fct_relevel(mes, "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")) 
+
