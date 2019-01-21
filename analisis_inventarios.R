@@ -59,3 +59,30 @@ bd_semanal <- bd_semanal %>%
          semana = dmy_hms(semana), # Transformar tipo de variable a dttm
          mes = fct_relevel(mes, "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")) 
 
+
+### Gráfica: inventario semanal de gasolina en 75 terminales de almacenamiento en México, 2018 ----
+bd_semanal %>% 
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento") %>%
+  group_by(terminal) %>% 
+  mutate(suma_mb = sum(mb)) %>% 
+  ungroup() %>%
+  ggplot(aes(semana, fct_rev(terminal), fill = log(mb))) +
+  geom_tile(color = "white") +
+  geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 1) +
+  annotate(geom = "text", x = as_datetime("2018-12-18 00:00:00"), y = 67, label = "AMLO", fontface = "bold", size = 11, color = "grey30") +
+  annotate(geom = "text", x = as_datetime("2018-11-22 00:00:00"), y = 67, label = "EPN", fontface = "bold", size = 11, color = "grey30") +
+  scale_fill_gradient(low = "white", high = "#ae052b", guide = guide_colorbar(barwidth = 12, nbins = 10), breaks = pretty_breaks(n = 10)) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2018-12-28 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  labs(title = str_wrap(str_to_upper("inventario semanal de gasolina en 75 terminales de almacenamiento en méxico, 2018"), width = 85), 
+       subtitle = str_wrap("Cada recuadro representa el número de miles de barriles (log) en el inventario de cada terminal en la semana correspondiente. Mientras más rojo el recuadro, mayor el inventario de gasolina en dicha semana. Los recuadros grises indican semanas en las que el inventario de la respectiva terminal de almacenamiento era de cero barriles.", width = 135),
+       x = "\n", 
+       y = NULL, 
+       fill = "Miles de   \n barriles (log)   ",
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 10 de enero de 2018. Debido al sesgo en la distribución del inventario de gasolina, usamos la\n versión logarítmica de esta variable.") +
+  tema_hm +
+  theme(legend.position = c(0.88, -0.16),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  ggsave(filename = "niveles_semanales_de_inventarios_de_gasolinas_por_terminal_log.png", path = "03_graficas/", width = 23, height = 18, dpi = 200)
+
+
