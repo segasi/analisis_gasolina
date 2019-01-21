@@ -70,8 +70,8 @@ bd_semanal %>%
   ggplot(aes(semana, fct_rev(terminal), fill = log(mb))) +
   geom_tile(color = "white") +
   geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 1) +
-  annotate(geom = "text", x = as_datetime("2018-12-18 00:00:00"), y = 67, label = "AMLO", fontface = "bold", size = 11, color = "grey30") +
-  annotate(geom = "text", x = as_datetime("2018-11-22 00:00:00"), y = 67, label = "EPN", fontface = "bold", size = 11, color = "grey30") +
+  annotate(geom = "text", x = as_datetime("2018-12-18 00:00:00"), y = 67, label = "AMLO", fontface = "bold", size = 11, color = "grey90") +
+  annotate(geom = "text", x = as_datetime("2018-11-22 00:00:00"), y = 67, label = "EPN", fontface = "bold", size = 11, color = "grey90") +
   scale_fill_gradient(low = "white", high = "#ae052b", guide = guide_colorbar(barwidth = 12, nbins = 10), breaks = pretty_breaks(n = 10)) +
   scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2018-12-28 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
   labs(title = str_wrap(str_to_upper("inventario semanal de gasolina en 75 terminales de almacenamiento en méxico, 2018"), width = 85), 
