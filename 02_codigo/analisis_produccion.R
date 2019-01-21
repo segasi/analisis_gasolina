@@ -66,6 +66,22 @@ bd_produccion <-
          fecha = dmy_hms(fecha), # Transformar tipo de variable a dttm
          mes = fct_relevel(mes, "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")) 
 
+### Transformaciones varias de datos de producción anual de gasolina ----
+
+# Agregar nombres de columnas ----
+colnames(bd_prod_anual_gasolina) <- colnames(nom_var_prod_anual)
+bd_prod_anual_gasolina
+
+# Transformar estructura de base de datos -----
+bd_prod_anual_gasolina <- 
+  bd_prod_anual_gasolina %>% 
+  select(-"..1") %>% # Renombrar primera columna
+  gather(key = año,
+         value = produccion) %>% 
+  separate(año, c("letra", "año")) %>% 
+  mutate(año = as.numeric(año))
+
+
 
 ### Gráfica: producción semanal de gasolina a nivel nacional entre el 6 de abril de 2018 y el 4 de enero de 2019 ----
 bd_produccion %>% 
