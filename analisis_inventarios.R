@@ -96,3 +96,25 @@ bd_semanal %>%
   summarise(mb_nacional = sum(mb)) %>% 
   ungroup() %>%
   summarise(mb_promedio_semanal = mean(mb_nacional))  
+
+
+### Inventarios nacionales semanales de gasolina, 2018 ----
+bd_semanal %>%
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento") %>% 
+  # group_by(mes = floor_date(semana, "month")) %>% 
+  group_by(semana) %>% 
+  summarise(mb_nacional = sum(mb)) %>% 
+  ungroup() %>%
+  mutate(mb_promedio_semanal = mean(mb_nacional)) %>% 
+  print(n = Inf)
+ggplot() +
+  geom_line(aes(semana, mb_nacional, group = 1)) +
+  geom_line(aes(semana, mb_promedio_semanal, group = 1), color = "red") +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2018-12-28 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_y_continuous() +
+  tema +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        legend.position = "none",
+        strip.background = element_rect(color = "grey60", fill = "grey60"),
+        strip.text = element_text(color = "white", size = 30))
