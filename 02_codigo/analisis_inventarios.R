@@ -156,3 +156,27 @@ bd_semanal %>%
         strip.text = element_text(color = "white", size = 30)) +
   ggsave(filename = paste("num_tars_inventario_por_tipo_combustible_vacio", Sys.Date(), ".png", sep = "_"), path = "03_graficas/", width = 12, height = 8, dpi = 200) 
 
+
+### Gráfica: inventario semanal de DIESEL en 75 terminales de almacenamiento en méxico, 2018 ----
+bd_semanal %>% 
+  filter(producto == "Diésel",
+         tipo_de_terminal == "Almacenamiento") %>%
+  group_by(terminal) %>% 
+  mutate(suma_mb = sum(mb)) %>% 
+  ungroup() %>%
+  ggplot(aes(semana, fct_rev(terminal), fill = log(mb))) +
+  geom_tile(color = "white") +
+  geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 1) +
+  annotate(geom = "text", x = as_datetime("2018-12-22 00:00:00"), y = 64, label = "AMLO", fontface = "bold", size = 11, color = "white") +
+  annotate(geom = "text", x = as_datetime("2018-11-22 00:00:00"), y = 64, label = "EPN", fontface = "bold", size = 11, color = "white") +
+  scale_fill_gradient(low = "white", high = "grey10", guide = guide_colorbar(barwidth = 12, nbins = 10), breaks = pretty_breaks(n = 10), na.value="salmon") +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  labs(title = str_wrap(str_to_upper("inventario semanal de diesel en 75 terminales de almacenamiento, 2018-2019"), width = 85), 
+       subtitle = str_wrap("Cada recuadro representa el número de miles de barriles (log) en el inventario de cada terminal en la semana correspondiente. Mientras más negro el recuadro, mayor el inventario de diesel en dicha semana. Los recuadros rojos indican semanas en las que el inventario de la respectiva terminal de almacenamiento era de cero barriles.", width = 135),
+       x = "\n", 
+       y = NULL, 
+       fill = "Miles de   \n barriles (log)   ",
+       caption = str_wrap("\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2018. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
+  tema_hm +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  ggsave(filename = paste("niveles_semanales_de_inventarios_de_diesel_por_terminal_log", Sys.Date(), ".png", sep = "_"), path = "03_graficas", width = 23, height = 18, dpi = 200)
