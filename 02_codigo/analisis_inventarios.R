@@ -120,3 +120,39 @@ ggplot() +
         legend.position = "none",
         strip.background = element_rect(color = "grey60", fill = "grey60"),
         strip.text = element_text(color = "white", size = 30))
+
+
+### Gráfica: número semanal de terminales de almacenamiento con cero barriles de inventario, por tipo de combustible ----
+bd_semanal %>% 
+  filter(producto %in% c("Gasolina", "Diésel"),
+         tipo_de_terminal == "Almacenamiento", 
+         mb == 00,
+         semana > as_datetime("2018-11-01 12:00:00")) %>%
+  group_by(semana, producto) %>% 
+  count() %>% 
+  ungroup() %>% 
+  mutate(etiqueta_grandes = ifelse(n > 3, n, ""),
+         etiqueta_chicos = ifelse(n <= 3, n, "")) %>% 
+  ggplot(aes(semana, n, fill = producto)) +
+  geom_col(alpha = 0.9) +
+  geom_text(aes(label = etiqueta_grandes), size = 6, color = "white", fontface = "bold", vjust = 1.7) +
+  geom_text(aes(label = etiqueta_chicos), size = 6, color = "grey50", fontface = "bold", vjust = -0.6) +
+  geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 0.8, linetype = 3) +
+  annotate(geom = "text", x = as_datetime("2018-12-10 12:00:00"), y = 19, label = "AMLO", fontface = "bold", size = 6, color = "grey50") +
+  annotate(geom = "text", x = as_datetime("2018-11-29 00:00:00"), y = 19, label = "EPN", fontface = "bold", size = 6, color = "grey50") +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_fill_manual(values = c("grey10", "#ae052b", "#00B573", "#FF424E")) +
+  facet_wrap(~ producto, ncol = 2) +
+  labs(title = str_wrap(str_to_upper("número semanal de terminales de almacenamiento con inventario de cero barriles, por tipo de combustible"), width = 55),
+       x = "\nFecha del corte semanal de información", 
+       y = NULL,
+       caption =  "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2018") +
+  tema +
+  theme(panel.grid.major = element_blank(),
+        axis.text.y = element_blank(), 
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        legend.position = "none",
+        strip.background = element_rect(color = "grey60", fill = "grey60"),
+        strip.text = element_text(color = "white", size = 30)) +
+  ggsave(filename = paste("num_tars_inventario_por_tipo_combustible_vacio", Sys.Date(), ".png", sep = "_"), path = "03_graficas/", width = 12, height = 8, dpi = 200) 
+
