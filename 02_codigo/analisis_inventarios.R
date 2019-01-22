@@ -176,7 +176,7 @@ bd_semanal %>%
        x = "\n", 
        y = NULL, 
        fill = "Miles de   \n barriles (log)   ",
-       caption = str_wrap("\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2018. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
+       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2018. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
   tema_hm +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   ggsave(filename = paste("niveles_semanales_de_inventarios_de_diesel_por_terminal_log", Sys.Date(), ".png", sep = "_"), path = "03_graficas", width = 23, height = 18, dpi = 200)
