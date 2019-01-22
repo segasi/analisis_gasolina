@@ -128,7 +128,7 @@ bd_produccion %>%
   ggplot() +
   geom_line(aes(fecha, produccion_semanal, group = 1), size = 1, alpha = 0.7, color = "grey50") +
   geom_line(aes(fecha, promedio_movil, group = 1), size = 2, alpha = 0.9, color = "salmon") +
-  scale_x_datetime(breaks = seq(as_datetime("2018-04-06 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "2 week"), limits = c(as_datetime("2018-03-20 12:00:00"), as_datetime("2019-01-14 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-04-13 12:00:00"), as_datetime("2019-01-18 12:00:00"), by = "2 week"), limits = c(as_datetime("2018-03-20 12:00:00"), as_datetime("2019-01-20 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
   scale_y_continuous(breaks = seq(0, 100, 10), limits = c(0, 125)) +
   facet_wrap(~ region, scale = "free_x") +
   labs(title = str_wrap(str_to_upper("producción semanal de gasolina a nivel regional, 6/4/2018 al 18/1/2019"), width = 80),
