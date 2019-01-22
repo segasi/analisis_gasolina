@@ -86,7 +86,7 @@ bd_prod_anual_gasolina <-
 
 
 
-### Gráfica: producción semanal de gasolina a nivel nacional entre el 6 de abril de 2018 y el 4 de enero de 2019 ----
+### Gráfica: producción semanal de gasolina a nivel nacional entre el 6 de abril de 2018 y el 18 de enero de 2019 ----
 bd_produccion %>% 
   filter(tipo == "Gasolina",
          fecha >= as_datetime("2018-03-31 12:00:00")) %>% 
@@ -102,7 +102,7 @@ bd_produccion %>%
   annotate(geom = "text", label = "Promedio móvil de cuatro semanas", x = as_datetime("2018-10-23 12:00:00"), y = 375, color = "grey30", size = 6, hjust = 0, family = "Didact Gothic Regular") +
   scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
   scale_y_continuous(breaks = seq(100, 400, 50), limits = c(90, 400)) +
-  labs(title = str_wrap(str_to_upper("producción semanal de gasolina a nivel nacional, 6/4/2018 al 4/1/2019"), width = 80),
+  labs(title = str_wrap(str_to_upper("producción semanal de gasolina a nivel nacional, 6/4/2018 al 18/1/2019"), width = 80),
        subtitle = str_wrap("La línea gris indica la producción semanal de gasolina. La línea roja muestra el promedio móvil de cuatro semanas.", width = 140),
        x = NULL,
        y = "Miles de barriles diarios\n",
@@ -110,7 +110,7 @@ bd_produccion %>%
   tema +
   theme(plot.title = element_text(size = 26, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  ggsave(filename = "produccion_semanal_nacional_gasolina_2018.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
+  ggsave(filename = paste("produccion_semanal_nacional_gasolina_2018", Sys.Date(), ".png", sep = ""), path = "03_graficas", width = 15, height = 10, dpi = 200) 
 
 
 
