@@ -180,3 +180,28 @@ bd_semanal %>%
   tema_hm +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   ggsave(filename = paste("niveles_semanales_de_inventarios_de_diesel_por_terminal_log", Sys.Date(), ".png", sep = "_"), path = "03_graficas", width = 23, height = 18, dpi = 200)
+
+
+
+### Gráfica: Número de semanas que TARs tuvieron inventarios de cero barriles de gasolina en las seis últimas semanas de 2018 ----
+bd_semanal %>% 
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento",
+         semana >= as_datetime("2018-11-23 12:00:00"),
+         mb == 0) %>% 
+  group_by(terminal) %>% 
+  summarise(num_semanas_cero = n()) %>% 
+  ungroup() %>% 
+  ggplot(aes(fct_reorder(terminal, num_semanas_cero), num_semanas_cero)) +
+  geom_col(fill = "#ae052b", alpha = 0.9) +
+  geom_text(aes(label = num_semanas_cero), size = 8, color = "white", fontface = "bold", vjust = 1.7) +
+  scale_y_continuous(expan = c(0, 0)) +
+  labs(title = str_wrap(str_to_upper("número de semanas que la terminal de almacenamiento ___ tuvo inventario de cero barriles de gasolina durante las siete semanas entre el 23/11/18 y el 04/01/19"), width = 65),
+       x = "\n", 
+       y = NULL,
+       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2018.", width = 150)) +
+  tema +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.text.y = element_blank(),
+        panel.grid.major = element_blank()) +
+  ggsave(filename = paste("num_semanas_inventario_gasolina_vacio_por_tar", Sys.Date(),".png", sep = "_"), path = "03_graficas/", width = 15, height = 10, dpi = 200)
