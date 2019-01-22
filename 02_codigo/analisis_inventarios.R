@@ -45,7 +45,9 @@ tema_hm <-  theme_minimal() +
 ### Importar datos ----
 
 # Fuente: http://estadisticashidrocarburos.energia.gob.mx/Datos_semana.aspx
-bd_semanal <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Inventarios")
+# bd_semanal <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Inventarios") # Base con corte al 4 de enero de 2019
+
+bd_semanal <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas copy.xlsx", sheet = "Inventarios") # Base con corte al 4 de enero de 2019
 
 
 ### Transformaciones varias ----
