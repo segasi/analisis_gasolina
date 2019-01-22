@@ -45,7 +45,10 @@ tema_hm <-  theme_minimal() +
 
 # Fuente: http://estadisticashidrocarburos.energia.gob.mx/Datos_semana.aspx
 
-bd_produccion <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Produccion")
+# bd_produccion <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas.xlsx", sheet = "Produccion") # Base con corte al 4 de enero de 2019
+
+bd_produccion <- read_excel("01_datos/EstadÃ_sticas EnergÃ©ticas copy.xlsx", sheet = "Produccion") # Base con corte al 18 de enero de 2019
+
 
 # Fuente: Sistema de Información Energetica (SIE). Por default, el SIE muestra los datos de 2018. Para ampliar la serie especificamos el rango temporal usando el botón de "Opciones".
 
