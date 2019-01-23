@@ -143,7 +143,7 @@ bd_semanal %>%
        x = NULL,
        y = "Miles de barriles\n",
        fill = "Tipo de terminal",
-       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2019") +
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = c(0.1, 0.86),
@@ -172,7 +172,7 @@ bd_semanal %>%
        caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019\n") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 15),
-        legend.position = c(0.9, -0.23),
+        legend.position = c(0.88, -0.24),
         strip.background = element_rect(color = "grey60", fill = "grey60"),
         strip.text = element_text(color = "white", size = 30)) +
   ggsave(filename = paste("nivel_nacional_de_inventarios_de_gasolinas_por_tipo_terminal_por_semana_proporciones", Sys.Date(), ".png", sep = "_"), path = "03_graficas/", width = 13, height = 9, dpi = 200)
