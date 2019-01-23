@@ -81,7 +81,7 @@ bd_semanal %>%
        x = "\n", 
        y = NULL, 
        fill = "Miles de   \n barriles (log)   ",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2018. Debido al sesgo en la distribución del inventario de gasolina, usamos la\n versión logarítmica de esta variable.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019. Debido al sesgo en la distribución del inventario de gasolina, usamos la\n versión logarítmica de esta variable.") +
   tema_hm +
   theme(legend.position = c(0.88, -0.16),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
@@ -146,7 +146,7 @@ bd_semanal %>%
   labs(title = str_wrap(str_to_upper("número semanal de terminales de almacenamiento con inventario de cero barriles, por tipo de combustible"), width = 55),
        x = "\nFecha del corte semanal de información", 
        y = NULL,
-       caption =  "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2018") +
+       caption =  "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2019") +
   tema +
   theme(panel.grid.major = element_blank(),
         axis.text.y = element_blank(), 
@@ -176,7 +176,7 @@ bd_semanal %>%
        x = "\n", 
        y = NULL, 
        fill = "Miles de   \n barriles (log)   ",
-       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2018. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
+       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
   tema_hm +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   ggsave(filename = paste("niveles_semanales_de_inventarios_de_diesel_por_terminal_log", Sys.Date(), ".png", sep = "_"), path = "03_graficas", width = 23, height = 18, dpi = 200)
@@ -199,7 +199,7 @@ bd_semanal %>%
   labs(title = str_wrap(str_to_upper("número de semanas que la terminal de almacenamiento ___ tuvo inventario de cero barriles de gasolina durante las siete semanas entre el 23/11/18 y el 04/01/19"), width = 65),
        x = "\n", 
        y = NULL,
-       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2018.", width = 150)) +
+       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019.", width = 150)) +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
