@@ -100,27 +100,31 @@ bd_semanal %>%
   summarise(mb_promedio_semanal = mean(mb_nacional))  
 
 
-### Inventarios nacionales semanales de gasolina, 2018 ----
+### Inventario Total de Gasolina en las 75 TARs, por semana, 2018-2019. semanales de 2018 y 2019 ----
 bd_semanal %>%
   filter(producto == "Gasolina",
          tipo_de_terminal == "Almacenamiento") %>% 
-  # group_by(mes = floor_date(semana, "month")) %>% 
   group_by(semana) %>% 
   summarise(mb_nacional = sum(mb)) %>% 
   ungroup() %>%
-  mutate(mb_promedio_semanal = mean(mb_nacional)) %>% 
-  print(n = Inf)
-ggplot() +
-  geom_line(aes(semana, mb_nacional, group = 1)) +
-  geom_line(aes(semana, mb_promedio_semanal, group = 1), color = "red") +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2018-12-28 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
-  scale_y_continuous() +
+  ggplot() +
+  geom_line(aes(semana, mb_nacional, group = 1), color = "grey50", size = 1) +
+  geom_vline(xintercept = as_datetime("2018-12-01 00:00:00"), color = "salmon", size = 0.8, linetype = 2) +
+  annotate(geom = "text", x = as_datetime("2018-12-21 12:00:00"), y = 3125, label = "AMLO", fontface = "bold", size = 8, color = "grey50") +
+  annotate(geom = "text", x = as_datetime("2018-11-15 00:00:00"), y = 3125, label = "EPN", fontface = "bold", size = 8, color = "grey50") +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-09 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_y_continuous(breaks = seq(1500, 3500, 250), label = comma) +
+  labs(title = str_wrap(str_to_upper("inventario semanal total de gasolina en las 75 TARs, 2018-2019"), width = 55),
+       subtitle = "Datos con corte al 4 de enero de 2019", 
+       x = NULL,
+       y = "Miles de barriles\n",
+       caption =  "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2019") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = "none",
         strip.background = element_rect(color = "grey60", fill = "grey60"),
-        strip.text = element_text(color = "white", size = 30))
-
+        strip.text = element_text(color = "white", size = 30)) +
+  ggsave(filename = paste("niveles_totales_de_inventarios_de_gasolinas_tars_por_semana", Sys.Date(), ".png", sep = "_"), path = "03_graficas/", width = 13, height = 9, dpi = 200)
 
 ### Gráfica: número semanal de terminales de almacenamiento con cero barriles de inventario, por tipo de combustible ----
 bd_semanal %>% 
