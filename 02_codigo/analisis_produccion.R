@@ -106,7 +106,7 @@ bd_produccion %>%
        subtitle = str_wrap("La línea gris indica la producción semanal de gasolina. La línea roja muestra el promedio móvil de cuatro semanas.", width = 140),
        x = NULL,
        y = "Miles de barriles diarios\n",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2018.\n La serie comienza el 6 de abril de 2018 porque ese es el primer mes para el cual la base de datos tiene información para todas las semanas.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019.\n La serie comienza el 6 de abril de 2018 porque ese es el primer mes para el cual la base de datos tiene información para todas las semanas.") +
   tema +
   theme(plot.title = element_text(size = 26, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
@@ -135,7 +135,7 @@ bd_produccion %>%
        subtitle = str_wrap("Las líneas grises indican la producción semanal de gasolina. Las líneas rojas muestran el promedio móvil de cuatro semanas.", width = 140),
        x = NULL,
        y = "Miles de barriles diarios\n",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2018.\nLa serie comienza el 6 de abril de 2018 porque ese es el primer mes para el cual la base de datos tiene información para todas las semanas.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019.\nLa serie comienza el 6 de abril de 2018 porque ese es el primer mes para el cual la base de datos tiene información para todas las semanas.") +
   tema +
   theme(plot.title = element_text(size = 35, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
         plot.subtitle = element_text(size = 24), 
@@ -160,7 +160,7 @@ bd_prod_anual_gasolina %>%
        subtitle = "Miles de barriles diarios",
        x = NULL,
        y = NULL,
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE. Consultado el 20 de enero de 2018.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE. Consultado el 20 de enero de 2019.") +
   tema +
   theme(plot.title = element_text(size = 26, face = "bold", margin = margin(10,0,20,0), family="Trebuchet MS Bold", color = "grey25"),
         plot.subtitle = element_text(size = 20),

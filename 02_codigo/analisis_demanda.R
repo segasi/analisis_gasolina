@@ -141,7 +141,7 @@ d_edos %>%
        subtitle = "Las líneas grises indican la demanda mensual de gasolina a lo largo de cada año. La línea roja representa el promedio de la demana para el mes y estado correspondiente.",
        x = NULL,
        y = "Miles de barriles diarios\n",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2018.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2019.") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         strip.background = element_rect(color = "grey60", fill = "grey60"),
@@ -168,7 +168,7 @@ d_nal_reg %>%
        subtitle = str_wrap("Las líneas grises indican la demanda mensual de gasolina a lo largo del año correspondiente. La línea roja representa la demanda promedio de gasolina para ese mes en el período analizado.", width = 130),
        x = NULL,
        y = "Miles de barriles diarios\n",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2018.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2019.") +
   tema +
   ggsave(filename = "demanda_mensual_gasolina_año_2012_2017.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
 

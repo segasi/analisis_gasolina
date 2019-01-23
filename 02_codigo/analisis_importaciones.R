@@ -122,7 +122,7 @@ bd_imports %>%
        subtitle = str_wrap("Las líneas grises indican el volumen de importaciones mensuales de gasolina a lo largo del año correspondiente. La línea roja representa el promedio de importaciones de gasolina para ese mes en el período analizado. La línea azul resalta los valores de 2018.", width = 130),
        x = NULL,
        y = "Miles de barriles diarios\n",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2018. *La cifra de\ndiciembre de 2018 es preliminar y proviene de la información publicada por la Secretaría de Energía.") +
+       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SIE, url: bit.ly/2RBtZlu. Consultado el 17 de enero de 2019. *La cifra de\ndiciembre de 2018 es preliminar y proviene de la información publicada por la Secretaría de Energía.") +
   tema +
   theme(legend.position = "none") +
   ggsave(filename = "importaciones_mensual_gasolina_año_2012_2017.png", path = "03_graficas", width = 15, height = 10, dpi = 200) 
