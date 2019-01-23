@@ -151,6 +151,33 @@ bd_semanal %>%
         strip.text = element_text(color = "white", size = 30)) +
   ggsave(filename = paste("nivel_nacional_de_inventarios_de_gasolinas_por_tipo_terminal_por_semana", Sys.Date(), ".png", sep = "_"), path = "03_graficas/", width = 13, height = 9, dpi = 200)
 
+
+### Distribución proporcional del inventario nacional de gasolina en terminales de almacenamiento y marítimas por semana, 2018-2019 ----
+bd_semanal %>%
+  filter(producto == "Gasolina") %>% 
+  group_by(semana, tipo_de_terminal) %>% 
+  summarise(mb_nacional = sum(mb)) %>% 
+  ungroup() %>%
+  ggplot() +
+  geom_area(aes(semana, mb_nacional, fill = tipo_de_terminal), position = "fill") +
+  geom_hline(yintercept = seq(0, 1, 0.25), color = "white", alpha = 0.3, linetype = 2) +
+  scale_fill_manual(values = c("grey50", "#ae052b")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-09 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(title = str_wrap(str_to_upper("distribución proporcional del inventario nacional de gasolina en terminales de almacenamiento y marítimas por semana, 2018-2019"), width = 55),
+       subtitle = "Datos con corte al 4 de enero de 2019", 
+       x = NULL,
+       y = "Proporción\n",
+       fill = "Tipo de terminal",
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019\n") +
+  tema +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 15),
+        legend.position = c(0.9, -0.23),
+        strip.background = element_rect(color = "grey60", fill = "grey60"),
+        strip.text = element_text(color = "white", size = 30)) +
+  ggsave(filename = paste("nivel_nacional_de_inventarios_de_gasolinas_por_tipo_terminal_por_semana_proporciones", Sys.Date(), ".png", sep = "_"), path = "03_graficas/", width = 13, height = 9, dpi = 200)
+
+
 ### Gráfica: número semanal de terminales de almacenamiento con cero barriles de inventario, por tipo de combustible ----
 bd_semanal %>% 
   filter(producto %in% c("Gasolina", "Diésel"),
