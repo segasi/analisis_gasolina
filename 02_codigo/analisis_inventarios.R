@@ -143,7 +143,7 @@ bd_semanal %>%
        x = NULL,
        y = "Miles de barriles\n",
        fill = "Tipo de terminal",
-       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019") +
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = c(0.1, 0.86),
