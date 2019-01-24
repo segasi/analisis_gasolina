@@ -210,6 +210,39 @@ bd_semanal %>%
         strip.background = element_rect(color = "grey60", fill = "grey60"),
         strip.text = element_text(color = "white", size = 25)) +
   ggsave(filename = "inventarios_semanal_gasolina_en_TARs_por_edo.png", path = "03_graficas", width = 23, height = 18, dpi = 200)
+
+### Gráfica: inventario semanal de gasolina en las terminales de almacenamiento de cada estado, 2018-2019 (escala libre en y) ----
+bd_semanal %>% 
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento") %>% 
+  group_by(estado, semana) %>% 
+  summarise(mb_estatal = sum(mb)) %>% 
+  ungroup() %>%
+  group_by(estado) %>% 
+  mutate(prom_mov_mb_estado = rollmean(x = mb_estatal, 4, align = "right", fill = NA), 
+         prom_anual_mb_estado = mean(mb_estatal)) %>% 
+  ungroup() %>%
+  ggplot() +
+  geom_line(aes(semana, mb_estatal, group = 1), size = 1, alpha = 0.4) +
+  geom_line(aes(semana, prom_mov_mb_estado, group = 1), color = "salmon", size = 1) +
+  facet_wrap(~ estado, scale = "free_y") +
+  labs(title = str_wrap(str_to_upper("inventario semanal de gasolina en las terminales de almacenamiento de cada estado, 2018-2019 (escala libre en eje vertical)"), width = 75), 
+       subtitle = str_wrap("La línea gris corresponde a la suma de los inventarios semanales en todas las TARs del estado correspondiente, y la roja al promedio móvil de cuatro semanas del inventario estatal. ", width = 135),
+       x = "\n", 
+       y = "Miles de barriles\n",
+       caption = str_wrap("Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019.", width = 110)) +
+  scale_x_datetime(date_breaks = "1 month", expand = c(0, 0),  date_labels = ("%b-%d")) +
+  tema +
+  theme(plot.title = element_text(size = 35),
+        plot.subtitle = element_text(size = 25),
+        plot.caption = element_text(size = 25),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.title.y = element_text(size = 20),
+        strip.background = element_rect(color = "grey60", fill = "grey60"),
+        strip.text = element_text(color = "white", size = 25)) +
+  ggsave(filename = "inventarios_semanal_gasolina_en_TARs_por_edo_escala_libre_y.png", path = "03_graficas", width = 23, height = 18, dpi = 200)
+
+
 ### Gráfica: número semanal de terminales de almacenamiento con cero barriles de inventario, por tipo de combustible ----
 bd_semanal %>% 
   filter(producto %in% c("Gasolina", "Diésel"),
