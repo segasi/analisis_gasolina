@@ -342,7 +342,7 @@ bd_semanal %>%
   geom_treemap_text(aes(area = mb, label = paste(round(mb, 1), " miles de barriles", sep = "")), color = "white", padding.y = unit(16, "mm"), size = 25) +
   geom_treemap_text(aes(area = mb, label = paste(por_tar, "% del total", sep = "")), color = "white", padding.y = unit(28, "mm"), size = 25) +
   scale_fill_gradient(low = "grey80", high = "#ae052b", guide = guide_colorbar(barwidth = 18, nbins = 6), labels = comma, breaks = pretty_breaks(n = 6)) +
-  labs(title = str_wrap(str_to_upper("distribución del inventario de gasolina en las 75 TARs en la semana del\n11 de enero de 2019"), width = 75),
+  labs(title = (str_to_upper("distribución del inventario de gasolina en las 75 TARs en la semana del\n11 de enero de 2019")),
        x = NULL,
        y = NULL,
        caption = str_wrap("Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019.", width = 110)) +
@@ -350,3 +350,61 @@ bd_semanal %>%
   theme(plot.title = element_text(size = 40),
         legend.position = "none") +
   ggsave(filename = "distribucion_inventario_gasolina_en_TARs_semana_110119.png", path = "03_graficas", width = 23, height = 18, dpi = 200)
+
+
+
+### Gráfica: distribución del inventario de gasolina en las 75 TARs, por semana, 2018 al 11/01/2019 ----
+
+# Generar vector para ordenar áreas ----
+orden <- bd_semanal %>% 
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento", 
+         semana == as_datetime("2019-01-11 12:00:00")) %>%   
+  arrange(-mb) %>% 
+  select(terminal, mb) 
+
+orden_tars <- orden$terminal
+
+
+# Gráfica ----
+bd_semanal %>% 
+  filter(producto == "Gasolina",
+         tipo_de_terminal == "Almacenamiento") %>%   
+  group_by(semana) %>% 
+  mutate(total_semanal  = sum(mb),
+         por_tar = round((mb/total_semanal)*100, 2)) %>%   
+  ungroup() %>% 
+  mutate(terminal = fct_rev(fct_relevel(terminal, orden_tars)),
+         color_terminal = case_when(terminal == "ROSARITO" ~ "Sí",
+                                    terminal == "PAJARITOS" ~ "Sí",
+                                    TRUE ~ "No")) %>%
+  ggplot() +
+  geom_area(aes(semana, por_tar, fill = color_terminal, group = terminal), color = "white", alpha = 0.8, size = 0.5) +
+  annotate(geom = "text", x = as_datetime("2019-01-25 12:00:00"), y = 10, label = "Rosarito\n(BC)", fontface = "bold", size = 7, color = "grey50", hjust = 0.5, family="Didact Gothic Regular") +
+  annotate(geom = "text", x = as_datetime("2019-01-25 12:00:00"), y = 30.5, label = "Pajaritos\n(Ver.)", fontface = "bold", size = 7, color = "grey50", hjust = 0.5, family="Didact Gothic Regular") +
+  annotate(geom = "text", x = as_datetime("2018-07-23 12:00:00"), y = 18, label = "18 de marzo\n(CDMX)", fontface = "bold", size = 7, color = "white", hjust = 0.5, family="Didact Gothic Regular") +
+  annotate("segment", x = as_datetime("2018-01-05 12:00:00"), xend = as_datetime("2019-01-11 12:00:00"), y = 25, yend = 25, color = "grey50", linetype = 2, size = 1) +
+  annotate("segment",  x = as_datetime("2018-01-05 12:00:00"), xend = as_datetime("2019-01-11 12:00:00"), y = 50, yend = 50, color = "grey50", linetype = 2, size = 1) +
+  annotate("segment",  x = as_datetime("2018-01-05 12:00:00"), xend = as_datetime("2019-01-11 12:00:00"), y = 75, yend = 75, color = "grey50", linetype = 2, size = 1) +
+  scale_fill_manual(values = c("grey70", "#ae052b")) +
+  annotate("segment",  x = as_datetime("2019-01-08 12:00:00"), xend = as_datetime("2019-01-15 12:00:00"), y = 28, yend = 30.5, color = "grey30", linetype = 1, size = 1) +
+  
+  annotate("segment",  x = as_datetime("2019-01-08 12:00:00"), xend = as_datetime("2019-01-15 12:00:00"), y = 10, yend = 10, color = "grey30", linetype = 1, size = 1) +
+  
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%d-%b-%y"), limits = c(as_datetime("2018-01-03 12:00:00"), as_datetime("2019-02-05 12:00:00"))) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(title = (str_to_upper("distribución porcentual del inventario de gasolina entre las 75 TARs,\npor semana, 2018-2019")),
+       subtitle = str_wrap("Cada una de las áreas representa el porcentaje del inventario de gasolina que había en esa terminal respecto al inventario total en las 75 TARs en la semana correspondiente. Las dos terminales en rojo acumulaban casi el 40% del inventario total en TARs en el corte del 11 de enero de 2019.", width = 120), 
+       x = NULL,
+       y = "Porcentaje del total\n",
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019.") +
+  tema +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 20),
+        axis.text.y = element_text(size = 25),
+        axis.title.y = element_text(size = 30),
+        legend.position = "none",
+        panel.grid = element_blank(),
+        plot.title = element_text(size = 35),
+        plot.subtitle = element_text(size = 28),
+        plot.caption = element_text(size = 25)) +
+  ggsave(filename = "distribucion_inventario_gasolina_en_TARs_por_semana.png", path = "03_graficas", width = 23, height = 18, dpi = 200)
