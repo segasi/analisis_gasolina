@@ -342,7 +342,7 @@ bd_semanal %>%
   geom_treemap_text(aes(area = mb, label = paste(round(mb, 1), " miles de barriles", sep = "")), color = "white", padding.y = unit(16, "mm"), size = 25) +
   geom_treemap_text(aes(area = mb, label = paste(por_tar, "% del total", sep = "")), color = "white", padding.y = unit(28, "mm"), size = 25) +
   scale_fill_gradient(low = "grey80", high = "#ae052b", guide = guide_colorbar(barwidth = 18, nbins = 6), labels = comma, breaks = pretty_breaks(n = 6)) +
-  labs(title = str_wrap(str_to_upper("distribución del inventario de gasolina en las 75 TARs en la semana del 11 de enero de 2019"), width = 65),
+  labs(title = str_wrap(str_to_upper("distribución del inventario de gasolina en las 75 TARs en la semana del\n11 de enero de 2019"), width = 75),
        x = NULL,
        y = NULL,
        caption = str_wrap("Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019.", width = 110)) +
