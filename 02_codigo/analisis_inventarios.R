@@ -74,16 +74,16 @@ bd_semanal %>%
   ggplot(aes(semana, fct_rev(terminal), fill = log(mb))) +
   geom_tile(color = "white") +
   geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 1) +
-  annotate(geom = "text", x = as_datetime("2018-12-22 00:00:00"), y = 67, label = "AMLO", fontface = "bold", size = 11, color = "grey90") +
+  annotate(geom = "text", x = as_datetime("2018-12-25 00:00:00"), y = 67, label = "AMLO", fontface = "bold", size = 11, color = "grey90") +
   annotate(geom = "text", x = as_datetime("2018-11-22 00:00:00"), y = 67, label = "EPN", fontface = "bold", size = 11, color = "grey90") +
   scale_fill_gradient(low = "white", high = "#ae052b", guide = guide_colorbar(barwidth = 12, nbins = 10), breaks = pretty_breaks(n = 10)) +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
   labs(title = str_wrap(str_to_upper("inventario semanal de gasolina en 75 terminales de almacenamiento, 2018-2019"), width = 85), 
        subtitle = str_wrap("Cada recuadro representa el número de miles de barriles (log) en el inventario de cada terminal en la semana correspondiente. Mientras más rojo el recuadro, mayor el inventario de gasolina en dicha semana. Los recuadros grises indican semanas en las que el inventario de la respectiva terminal de almacenamiento era de cero barriles.", width = 135),
        x = "\n", 
        y = NULL, 
        fill = "Miles de   \n barriles (log)   ",
-       caption = "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019. Debido al sesgo en la distribución del inventario de gasolina, usamos la\n versión logarítmica de esta variable.") +
+       caption = "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019.\nDebido al sesgo en la distribución del inventario de gasolina, uso la versión logarítmica de esta variable.") +
   tema_hm +
   theme(legend.position = c(0.88, -0.16),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
@@ -102,7 +102,7 @@ bd_semanal %>%
   summarise(mb_promedio_semanal = mean(mb_nacional))  
 
 
-### Inventario Total de Gasolina en las 75 TARs, por semana, 2018-2019. semanales de 2018 y 2019 ----
+### Inventario Total de Gasolina en las 75 TARs, por semana, 2018-2019 ----
 bd_semanal %>%
   filter(producto == "Gasolina",
          tipo_de_terminal == "Almacenamiento") %>% 
@@ -112,15 +112,15 @@ bd_semanal %>%
   ggplot() +
   geom_line(aes(semana, mb_nacional, group = 1), color = "grey50", size = 1) +
   geom_vline(xintercept = as_datetime("2018-12-01 00:00:00"), color = "salmon", size = 0.8, linetype = 2) +
-  annotate(geom = "text", x = as_datetime("2018-12-21 12:00:00"), y = 3125, label = "AMLO", fontface = "bold", size = 8, color = "grey50") +
+  annotate(geom = "text", x = as_datetime("2018-12-25 12:00:00"), y = 3125, label = "AMLO", fontface = "bold", size = 8, color = "grey50") +
   annotate(geom = "text", x = as_datetime("2018-11-15 00:00:00"), y = 3125, label = "EPN", fontface = "bold", size = 8, color = "grey50") +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-09 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-16 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
   scale_y_continuous(breaks = seq(1500, 3500, 250), label = comma) +
   labs(title = str_wrap(str_to_upper("inventario semanal total de gasolina en las 75 TARs, 2018-2019"), width = 55),
-       subtitle = "Datos con corte al 4 de enero de 2019", 
+       subtitle = "Datos con corte al 11 de enero de 2019", 
        x = NULL,
        y = "Miles de barriles\n",
-       caption =  "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2019") +
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = "none",
@@ -138,14 +138,14 @@ bd_semanal %>%
   ggplot() +
   geom_area(aes(semana, mb_nacional, fill = tipo_de_terminal)) +
   scale_fill_manual(values = c("grey50", "#ae052b")) +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-09 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-16 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
   scale_y_continuous(breaks = seq(0, 5000, 500), label = comma, expand = c(0, 0)) +
   labs(title = str_wrap(str_to_upper("inventario nacional de gasolina por tipo de terminal y semana, 2018-2019"), width = 55),
-       subtitle = "Datos con corte al 4 de enero de 2019", 
+       subtitle = "Datos con corte al 11 de enero de 2019", 
        x = NULL,
        y = "Miles de barriles\n",
        fill = "Tipo de terminal",
-       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019") +
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = c(0.1, 0.86),
@@ -164,14 +164,14 @@ bd_semanal %>%
   geom_area(aes(semana, mb_nacional, fill = tipo_de_terminal), position = "fill") +
   geom_hline(yintercept = seq(0, 1, 0.25), color = "white", alpha = 0.3, linetype = 2) +
   scale_fill_manual(values = c("grey50", "#ae052b")) +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-09 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), limits = c(as_datetime("2018-01-01 12:00:00"), as_datetime("2019-01-16 12:00:00")), expand = c(0, 0),  date_labels = ("%b-%d")) +
   scale_y_continuous(expand = c(0, 0)) +
   labs(title = str_wrap(str_to_upper("distribución proporcional del inventario nacional de gasolina en terminales de almacenamiento y marítimas por semana, 2018-2019"), width = 55),
-       subtitle = "Datos con corte al 4 de enero de 2019", 
+       subtitle = "Datos con corte al 11 de enero de 2019", 
        x = NULL,
        y = "Proporción\n",
        fill = "Tipo de terminal",
-       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj.\nConsultado el 21 de enero de 2019\n") +
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG.\nConsultado el 24 de enero de 2019\n") +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 15),
         legend.position = c(0.88, -0.24),
@@ -198,13 +198,13 @@ bd_semanal %>%
   geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 0.8, linetype = 3) +
   annotate(geom = "text", x = as_datetime("2018-12-10 12:00:00"), y = 19, label = "AMLO", fontface = "bold", size = 6, color = "grey50") +
   annotate(geom = "text", x = as_datetime("2018-11-29 00:00:00"), y = 19, label = "EPN", fontface = "bold", size = 6, color = "grey50") +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
   scale_fill_manual(values = c("grey10", "#ae052b", "#00B573", "#FF424E")) +
   facet_wrap(~ producto, ncol = 2) +
   labs(title = str_wrap(str_to_upper("número semanal de terminales de almacenamiento con inventario de cero barriles, por tipo de combustible"), width = 55),
        x = "\nFecha del corte semanal de información", 
        y = NULL,
-       caption =  "\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21\nde enero de 2019") +
+       caption =  "\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 21\nde enero de 2019") +
   tema +
   theme(panel.grid.major = element_blank(),
         axis.text.y = element_blank(), 
@@ -225,16 +225,16 @@ bd_semanal %>%
   ggplot(aes(semana, fct_rev(terminal), fill = log(mb))) +
   geom_tile(color = "white") +
   geom_vline(xintercept = as_datetime("2018-12-04 00:00:00"), color = "black", size = 1) +
-  annotate(geom = "text", x = as_datetime("2018-12-22 00:00:00"), y = 64, label = "AMLO", fontface = "bold", size = 11, color = "white") +
+  annotate(geom = "text", x = as_datetime("2018-12-25 00:00:00"), y = 64, label = "AMLO", fontface = "bold", size = 11, color = "white") +
   annotate(geom = "text", x = as_datetime("2018-11-22 00:00:00"), y = 64, label = "EPN", fontface = "bold", size = 11, color = "white") +
   scale_fill_gradient(low = "white", high = "grey10", guide = guide_colorbar(barwidth = 12, nbins = 10), breaks = pretty_breaks(n = 10), na.value="salmon") +
-  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-04 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
+  scale_x_datetime(breaks = seq(as_datetime("2018-01-05 12:00:00"), as_datetime("2019-01-11 12:00:00"), by = "1 week"), expand = c(0, 0),  date_labels = ("%b-%d")) +
   labs(title = str_wrap(str_to_upper("inventario semanal de diesel en 75 terminales de almacenamiento, 2018-2019"), width = 85), 
        subtitle = str_wrap("Cada recuadro representa el número de miles de barriles (log) en el inventario de cada terminal en la semana correspondiente. Mientras más negro el recuadro, mayor el inventario de diesel en dicha semana. Los recuadros rojos indican semanas en las que el inventario de la respectiva terminal de almacenamiento era de cero barriles.", width = 135),
        x = "\n", 
        y = NULL, 
        fill = "Miles de   \n barriles (log)   ",
-       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
+       caption = str_wrap("\nSebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019. Debido al sesgo en la distribución del inventario de diesel, uso la versión logarítmica de esta variable.", width = 110)) +
   tema_hm +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   ggsave(filename = paste("niveles_semanales_de_inventarios_de_diesel_por_terminal_log", Sys.Date(), ".png", sep = "_"), path = "03_graficas", width = 23, height = 18, dpi = 200)
@@ -254,10 +254,10 @@ bd_semanal %>%
   geom_col(fill = "#ae052b", alpha = 0.9) +
   geom_text(aes(label = num_semanas_cero), size = 8, color = "white", fontface = "bold", vjust = 1.7) +
   scale_y_continuous(expan = c(0, 0)) +
-  labs(title = str_wrap(str_to_upper("número de semanas que la terminal de almacenamiento ___ tuvo inventario de cero barriles de gasolina durante las siete semanas entre el 23/11/18 y el 04/01/19"), width = 65),
+  labs(title = str_wrap(str_to_upper("número de semanas que la terminal de almacenamiento ___ tuvo inventario de cero barriles de gasolina durante las siete semanas entre el 23/11/18 y el 11/01/19"), width = 65),
        x = "\n", 
        y = NULL,
-       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2FsYvqj. Consultado el 21 de enero de 2019.", width = 150)) +
+       caption = str_wrap("\nJorge A. Castañeda / @jorgeacast / Sebastián Garrido de Sierra / @segasi / Fuente: SENER, url: bit.ly/2WcNhfG. Consultado el 24 de enero de 2019.", width = 150)) +
   tema +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
